@@ -30,7 +30,6 @@ public class WinUI extends JPanel {
 		a.setFont(font1);
 		a.setFocusable(false);
 		a.setEditable(false);
-		a.setOpaque(false);
 		a.setBorder(null);
 		a.setBackground(ColorEncoder.byId(winner));
 		
