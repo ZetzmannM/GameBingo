@@ -37,7 +37,7 @@ public class IntroGUI extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(500, 410);
 		
-		JTextArea text = new JTextArea("Enter goals separated by \\n, or json (text must then begin with '[' (like the json array)) ");
+		JTextArea text = new JTextArea("Enter goals separated by \\n, or json (text must then begin with '[' (like the json array) ");
 		text.setEditable(false);
 		text.setBackground(new Color(0,0,0,0));
 		text.setFocusable(false);
