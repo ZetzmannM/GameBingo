@@ -32,8 +32,9 @@ public class GameStateUpdate extends SocketAction {
 		
 		float[] arr = srv.state.percentages();
 		
+		gameStatus="";
 		for(int a = 0; a < arr.length; a++) {
-			gameStatus += " | " + ColorEncoder.nameById(a) + ": " + arr[a]; 
+			gameStatus += " | " + ColorEncoder.nameById(a) + ": " + (arr[a]*100) + "%"; 
 		}
 		
 		srv.intUi.setTitle(InitGame.initStatus+ GameStateUpdate.gameStatus);
