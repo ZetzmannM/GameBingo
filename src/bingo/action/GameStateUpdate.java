@@ -34,7 +34,7 @@ public class GameStateUpdate extends SocketAction {
 		
 		gameStatus="";
 		for(int a = 0; a < arr.length; a++) {
-			gameStatus += " | " + ColorEncoder.nameById(a) + ": " + (arr[a]*100) + "%"; 
+			gameStatus += " | " + ColorEncoder.nameById(a) + ": " + (Math.round(arr[a]*1000)/10) + "%"; 
 		}
 		
 		srv.intUi.setTitle(InitGame.initStatus+ GameStateUpdate.gameStatus);
