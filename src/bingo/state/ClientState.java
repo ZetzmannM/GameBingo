@@ -40,7 +40,6 @@ public class ClientState {
 		hndl.getContentPane().removeAll();
 		hndl.setLayout(new GridLayout(1, 1));
 		hndl.setResizable(true);
-		hndl.setTitle("Greetings: " + 0 + " | Players : " + 1 + " | Free: 100%");
 		
 		cui= new ConnectingUI();
 		hndl.add(cui);

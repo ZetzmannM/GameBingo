@@ -36,8 +36,8 @@ public class ServerState {
 		this.goals = goals;
 		this.port = port;
 		this.intUi = hndl;
-		
-		
+		hndl.setTitle("Greetings: " + 0 + " | Players : " + 1 + " | Free: 100%");
+
 		hndl.addOnClose(new IOnClose() {
 			@Override
 			public void onClose() {
