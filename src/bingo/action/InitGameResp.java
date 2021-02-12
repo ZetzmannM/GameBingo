@@ -37,7 +37,6 @@ public class InitGameResp extends SocketAction{
 		GameSocketIO.writeGoals(srv.goals, out);
 		GameSocketIO.writeGameState(srv.state, out);		
 
-		System.out.println("Player with id " + s + " greeted");
 	}
 
 	@Override

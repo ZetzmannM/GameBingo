@@ -19,20 +19,7 @@ public class JSONInterface {
         	JSONObject js = (JSONObject) s;
         	goals.add((String)js.get("name"));
         }
-        
-        ArrayList<Integer> i = getAllDivisors(goals.size());
-        int cols = i.get((int) Math.floor(i.size()/2.0f));
-        int rows = goals.size()/cols;
-        
-        String[][] res = new String[rows][cols];
-        int ind = 0;
-        
-        for(int r = 0; r < rows; ++r) {
-            for(int c = 0; c < rows; ++c) {
-            	res[r][c] = goals.get(ind++);
-            }
-        }
-        		
+  
 		return fromStringList(goals);
 	}
 	
@@ -59,7 +46,7 @@ public class JSONInterface {
         int ind = 0;
         
         for(int r = 0; r < rows; ++r) {
-            for(int c = 0; c < rows; ++c) {
+            for(int c = 0; c < cols; ++c) {
             	res[r][c] = goals.get(ind++);
             }
         }

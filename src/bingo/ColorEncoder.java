@@ -19,7 +19,7 @@ public class ColorEncoder {
 	
 	public static String nameById(int id) {
 		switch(id) {
-		case 0: return "Gray";  
+		case 0: return "Empty";  
 		case 1: return "Red";
 		case 2: return "Blue";
 		case 3: return "Green";

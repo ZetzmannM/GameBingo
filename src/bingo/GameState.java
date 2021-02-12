@@ -32,6 +32,22 @@ public class GameState {
 		return state[a][b];
 	}
 	
+	public float[] percentages() {
+		float[] arr = new float[ServerState.playerCount+1];
+		
+		for(int a = 0; a < width; ++a) {
+			for(int b = 0; b < height; ++b) {
+				arr[state[a][b]]++;
+			}
+		}
+		
+		for(int a = 0; a < arr.length; a++) {
+			arr[a] /= (float)(this.width * this.height);
+		}
+		
+		return arr;
+	}
+	
 	public synchronized int getWinner() {
 		int[] arr = new int[ServerState.playerCount+1];
 		

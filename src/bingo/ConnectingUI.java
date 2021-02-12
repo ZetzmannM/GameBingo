@@ -8,20 +8,31 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ConnectingUI extends JPanel {
+	
+	JTextField content;
+	String basic ="Connecting...";
+	
 	public ConnectingUI(){
 		this.setLayout(new GridLayout(1,1));
 		Font font1 = new Font("SansSerif", Font.BOLD, 20);
 
-		JTextField a = new JTextField("Connecting...");
-		a.setFont(font1);
-		a.setFocusable(false);
-		a.setEditable(false);
-		a.setBackground(new Color(0,0,0,0));
-		a.setBorder(null);
-		a.setHorizontalAlignment(JTextField.CENTER);
+		content = new JTextField("Connecting...");
+		content.setFont(font1);
+		content.setFocusable(false);
+		content.setEditable(false);
+		content.setBackground(new Color(0,0,0,0));
+		content.setBorder(null);
+		content.setHorizontalAlignment(JTextField.CENTER);
 		
-		this.add(a);
+		this.add(content);
 		this.setVisible(true);
 	}
+	
+	
+	public void setText(String s) {
+		content.setText(basic + "\n" + s);
+		this.repaint();
+	}
 
+	
 }

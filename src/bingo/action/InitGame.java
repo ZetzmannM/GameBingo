@@ -22,6 +22,10 @@ public class InitGame extends SocketAction {
 	ClientState clnt;
 	ServerState srv;
 	
+	public static int greetings = 0;
+	
+	public static String initStatus = "";
+	
 	public InitGame(ClientState clnt, ServerState stat) {
 		this.clnt = clnt;
 		this.srv = stat;
@@ -37,15 +41,21 @@ public class InitGame extends SocketAction {
 	@Override
 	public void recieve(Socket t) throws IOException {
 		System.out.println("Recieved Greeting....");
+		
+		greetings++;
 
 		InputStream in = t.getInputStream();
 		
 		short s = (short) SocketIO.readShort(in); // PlayerId
 		if(s == 0) {
-			s = (short) ++srv.playerCount;
+			s = (short) ++ServerState.playerCount;
 		}
 		
 		srv.srvIO.sendSocketIndividual(t, SocketTypeConst.INIT_GAME_RESP, s);
+		
+		initStatus = "Greetings: " + greetings + " | Players : " + ServerState.playerCount;
+		
+		srv.intUi.setTitle(InitGame.initStatus+ GameStateUpdate.gameStatus);
 	}
 
 }

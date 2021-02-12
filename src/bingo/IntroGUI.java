@@ -59,7 +59,7 @@ public class IntroGUI extends JFrame {
 		final JButton start = new JButton("start");
 		start.setBounds(5, 270, 475, 35);
 		
-		final JTextField ip = new JTextField("");
+		final JTextField ip = new JTextField("192.168.178.100");
 		JTextField port = new JTextField("3132");
 		ip.setBounds(5, 310, 235, 25);
 		port.setBounds(245, 310, 236, 25);

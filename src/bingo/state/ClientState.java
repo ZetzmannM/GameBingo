@@ -31,6 +31,7 @@ public class ClientState {
 	
 	public UI ui;
 	public GameState state;
+	public ConnectingUI cui;
 	
 	public ClientState(String ip, int port, IntroGUI hndl){
 		this.ip = ip;
@@ -39,7 +40,10 @@ public class ClientState {
 		hndl.getContentPane().removeAll();
 		hndl.setLayout(new GridLayout(1, 1));
 		hndl.setResizable(true);
-		hndl.add(new ConnectingUI());
+		hndl.setTitle("Greetings: " + 0 + " | Players : " + 1 + " | Free: 100%");
+		
+		cui= new ConnectingUI();
+		hndl.add(cui);
 		hndl.setVisible(true);
 
 		
@@ -58,7 +62,9 @@ public class ClientState {
 				hndl.getContentPane().removeAll();
 				hndl.setLayout(new GridLayout(1, 1));
 				hndl.setResizable(true);
-				hndl.add(new ConnectingUI());
+				
+				cui.setText("");
+				hndl.add(cui);
 				hndl.setVisible(true);
 				ui = null;
 				
@@ -68,7 +74,7 @@ public class ClientState {
 						connected = true;
 						break;
 					}else {
-						System.out.println("Failed to connect, trying again...");
+						cui.setText("Failed to connect, trying again...");
 					}
 					try {
 						Thread.sleep(4000);
@@ -77,7 +83,7 @@ public class ClientState {
 					}
 				}
 				if(!connected) {
-					System.out.println("Failed to find server for too long...");
+					cui.setText("Failed to find server for too long...");
 					System.exit(0);
 				}			
 				clnt.sendSocket(SocketTypeConst.INIT_GAME, playerId);
@@ -103,7 +109,7 @@ public class ClientState {
 						connected = true;
 						break;
 					}else {
-						System.out.println("Failed to connect, trying again...");
+						cui.setText("Failed to connect, trying again...");
 					}
 					try {
 						Thread.sleep(4000);
@@ -112,7 +118,7 @@ public class ClientState {
 					}
 				}
 				if(!connected) {
-					System.out.println("Failed to find server for too long...");
+					cui.setText("Failed to find server for too long...");
 					System.exit(0);
 				}
 				clnt.sendSocket(SocketTypeConst.INIT_GAME, 0);
