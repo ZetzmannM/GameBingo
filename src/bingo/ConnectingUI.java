@@ -20,7 +20,7 @@ public class ConnectingUI extends JPanel {
 		content.setFont(font1);
 		content.setFocusable(false);
 		content.setEditable(false);
-		content.setBackground(new Color(0,0,0,0));
+		content.setOpaque(false);
 		content.setBorder(null);
 		content.setHorizontalAlignment(JTextField.CENTER);
 		

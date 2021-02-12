@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.text.DefaultHighlighter;
 
 import bingo.state.ClientState;
 import bingo.state.ServerState;
@@ -39,7 +40,7 @@ public class IntroGUI extends JFrame {
 		
 		JTextArea text = new JTextArea("Enter goals separated by \\n, or json (text must then begin with '[' (like the json array) ");
 		text.setEditable(false);
-		text.setBackground(new Color(0,0,0,0));
+		text.setOpaque(false);
 		text.setFocusable(false);
 		text.setLineWrap(true);
 		text.setBounds(5, 5, 490, 25);
