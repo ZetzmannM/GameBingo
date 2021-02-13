@@ -12,9 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.DefaultHighlighter;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 import bingo.state.ClientState;
 import bingo.state.ServerState;
@@ -32,11 +34,11 @@ public class IntroGUI extends JFrame {
 		return res;
 	}
 	
-	public IntroGUI(final int wantedId) {
+	public IntroGUI() {
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(500, 410);
+		this.setSize(500, 470);
 		
 		this.setTitle("GameRaceBingo");
 		
@@ -45,7 +47,7 @@ public class IntroGUI extends JFrame {
 		text.setOpaque(false);
 		text.setFocusable(false);
 		text.setLineWrap(true);
-		text.setBounds(5, 5, 490, 25);
+		text.setBounds(5, 5, 470, 25);
 		text.setBorder(null);
 		text.setHighlighter(null);
 
@@ -68,13 +70,45 @@ public class IntroGUI extends JFrame {
 		port.setBounds(245, 310, 236, 25);
 		
 		final JCheckBox isServer = new JCheckBox("Run as server");
-		isServer.setBounds(5, 340, 475, 25);
+		isServer.setBounds(5, 335, 475, 25);
 		isServer.setEnabled(true);
+		
+		final JCheckBox impScenarios = new JCheckBox("Detect Impossible Scenario");
+		impScenarios.setBounds(5, 355, 475, 25);
+		impScenarios.setSelected(true);
 		
 		port.setBorder(BorderFactory.createLineBorder(Color.blue));
 		ip.setBorder(BorderFactory.createLineBorder(Color.blue));
 		input.setBorder(BorderFactory.createLineBorder(Color.blue));
 
+		SpinnerModel model =
+		        new SpinnerNumberModel(0, //initial value
+		                               0, //min
+		                               5, //max
+		                               1);             
+		JSpinner spin = new JSpinner(model);
+		spin.setBounds(5, 400, 475, 25);
+		
+		JTextField field = new JTextField("Wanted Player/Team id (0 for automatic assignment)");
+		field.setBounds(5, 375, 475, 25);
+		field.setOpaque(true);
+		field.setBorder(null);
+		field.setFocusable(false);
+		field.setEditable(false);
+		field.setVisible(true);
+		
+
+		this.add(spin);
+		this.add(field);
+		this.add(impScenarios);
+		this.add(isServer);
+		this.add(ip);
+		this.add(port);
+		this.add(start);
+		this.add(pane);
+		this.add(text);
+		
+		
 		isServer.addActionListener(new ActionListener() {
 			
 			@Override
@@ -82,8 +116,6 @@ public class IntroGUI extends JFrame {
 				ip.setEnabled(!isServer.isSelected());
 			}
 		});
-		
-		
 		start.addActionListener(new ActionListener() {
 			
 			@Override
@@ -127,25 +159,18 @@ public class IntroGUI extends JFrame {
 						return;
 					}
 
-					setup(true, "", prt, args, wantedId);
+					setup(true, "", prt, args, 1, impScenarios.isSelected());
 				}else {
 					if(ip.getText().split("\\.").length != 4) {
 						ip.setBorder(BorderFactory.createLineBorder(Color.red));
 						return;
 					}
 					
-					setup(false, ip.getText(), prt, new String[0][0], wantedId);
+					setup(false, ip.getText(), prt, new String[0][0], (int)spin.getValue(), false);
 				}
 			}
 		});
-		
-		this.add(isServer);
-		this.add(ip);
-		this.add(port);
-		this.add(start);
-		this.add(pane);
-		this.add(text);
-		
+
 		this.setVisible(true);
 	}
 	
@@ -159,11 +184,11 @@ public class IntroGUI extends JFrame {
 
 	}
 	
-	private void setup(boolean server, String ip, int port, String[][] gols, int wantedId) {
+	private void setup(boolean server, String ip, int port, String[][] gols, int wantedId, boolean detect) {
 		this.setVisible(false);
 		
 		if(server) {						
-			new ServerState(gols, port, this);
+			new ServerState(gols, port, this, detect);
 			
 		}else {
 			new ClientState(ip, port, this, wantedId);

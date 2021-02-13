@@ -28,16 +28,19 @@ public class ServerState {
 	public UI ui;
 	public GameState state;
 	public volatile Server srvIO;
+	public final boolean detectImpossibleScenarios;
 	
 	public static volatile int playerCount = 1;
 	public final int playerId = 1;
 	
-	public ServerState(String[][] goals, int port, IntroGUI hndl){
+	public ServerState(String[][] goals, int port, IntroGUI hndl, boolean detect){
 		this.goals = goals;
 		this.port = port;
 		this.intUi = hndl;
-		hndl.setTitle("Greetings: " + 0 + " | Players : " + 1 + " | Free: 100%");
+		this.detectImpossibleScenarios = detect;
 
+		hndl.setTitle("Greetings: " + 0 + " | Players : " + 1 + " | Free: 100%");
+		
 		hndl.addOnClose(new IOnClose() {
 			@Override
 			public void onClose() {
@@ -69,7 +72,7 @@ public class ServerState {
 					srvIO.sendSocket(SocketTypeConst.GAME_STATE_UPDATE); //Send update
 					
 					int winn = 0;
-					if((winn = state.getWinner()) != -1) {
+					if(detectImpossibleScenarios && ((winn = state.getWinner()) != -1)) {
 						intUi.setVisible(false);
 						intUi.getContentPane().removeAll();
 						WinUI ui = new WinUI(playerId, winn);

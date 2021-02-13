@@ -49,7 +49,7 @@ public class ClickUpdate extends SocketAction {
 		srv.srvIO.sendSocket(SocketTypeConst.GAME_STATE_UPDATE);
 		
 		int winn = 0;
-		if((winn = srv.state.getWinner()) != -1) {
+		if(srv.detectImpossibleScenarios && ((winn = srv.state.getWinner()) != -1)) {
 			srv.intUi.setVisible(false);
 			srv.intUi.getContentPane().removeAll();
 			WinUI ui = new WinUI(srv.playerId, winn);
