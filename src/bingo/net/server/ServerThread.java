@@ -15,7 +15,7 @@ import bingo.net.SocketTypeTable;
  * @version 1.0.0
  * @since Jun 30, 2015
  */
-public class ServerThread extends Thread{
+public class ServerThread extends Thread {
 
 	volatile boolean running = true;
 	ServerSocket server;

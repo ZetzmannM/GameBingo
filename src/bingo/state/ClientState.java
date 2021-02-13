@@ -33,7 +33,7 @@ public class ClientState {
 	public GameState state;
 	public ConnectingUI cui;
 	
-	public ClientState(String ip, int port, IntroGUI hndl){
+	public ClientState(String ip, int port, IntroGUI hndl, int wantedId){
 		this.ip = ip;
 		this.port = port;
 		this.intUi = hndl;
@@ -41,10 +41,11 @@ public class ClientState {
 		hndl.setLayout(new GridLayout(1, 1));
 		hndl.setResizable(true);
 		
+		this.playerId = wantedId;
+		
 		cui= new ConnectingUI();
 		hndl.add(cui);
 		hndl.setVisible(true);
-
 		
 		SocketTypeTable.registerAction(SocketTypeConst.INIT_GAME, new InitGame(this, null));
 		SocketTypeTable.registerAction(SocketTypeConst.CLICK_UPDATE, new ClickUpdate(this, null));
@@ -76,7 +77,7 @@ public class ClientState {
 						cui.setText("Failed to connect, trying again...");
 					}
 					try {
-						Thread.sleep(1000);
+						Thread.sleep(2000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -96,10 +97,7 @@ public class ClientState {
 				}
 			}
 		});
-		
-
 		new Thread( new Runnable() {
-			
 			@Override
 			public void run() {
 				boolean connected = false;

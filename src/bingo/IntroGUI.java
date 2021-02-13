@@ -32,11 +32,13 @@ public class IntroGUI extends JFrame {
 		return res;
 	}
 	
-	public IntroGUI() {
+	public IntroGUI(final int wantedId) {
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(500, 410);
+		
+		this.setTitle("GameRaceBingo");
 		
 		JTextArea text = new JTextArea("Enter goals separated by \\n, or json (text must then begin with '[' (like the json array) ");
 		text.setEditable(false);
@@ -125,14 +127,14 @@ public class IntroGUI extends JFrame {
 						return;
 					}
 
-					setup(true, "", prt, args);
+					setup(true, "", prt, args, wantedId);
 				}else {
 					if(ip.getText().split("\\.").length != 4) {
 						ip.setBorder(BorderFactory.createLineBorder(Color.red));
 						return;
 					}
 					
-					setup(false, ip.getText(), prt, new String[0][0]);
+					setup(false, ip.getText(), prt, new String[0][0], wantedId);
 				}
 			}
 		});
@@ -157,14 +159,14 @@ public class IntroGUI extends JFrame {
 
 	}
 	
-	private void setup(boolean server, String ip, int port, String[][] gols) {
+	private void setup(boolean server, String ip, int port, String[][] gols, int wantedId) {
 		this.setVisible(false);
 		
 		if(server) {						
 			new ServerState(gols, port, this);
 			
 		}else {
-			new ClientState(ip, port, this);
+			new ClientState(ip, port, this, wantedId);
 		}
 	}
 	

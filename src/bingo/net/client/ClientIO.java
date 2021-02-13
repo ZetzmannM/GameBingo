@@ -88,6 +88,7 @@ class ClientCareTakerThread extends Thread {
 					SocketTypeTable.get(type).recieve(s);
 				} catch (IOException e) {
 					System.err.println("Connection Reset!");
+					bad = true;
 					break;
 				}
 			}	

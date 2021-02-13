@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import org.json.simple.parser.ParseException;
 
+import bingo.ColorEncoder;
 import bingo.GameSocketIO;
 import bingo.GameState;
 import bingo.UI;
@@ -47,6 +48,7 @@ public class InitGameResp extends SocketAction{
 		
 		clnt.playerId = SocketIO.readShort(in);
 		System.out.println("Got assigned id " + clnt.playerId + " greeted");
+		clnt.intUi.setTitle("You are player: " + clnt.playerId + " (" + ColorEncoder.nameById(clnt.playerId) + ")"); 
 		
 		String[][] args;
 		try {
