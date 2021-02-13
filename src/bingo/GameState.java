@@ -56,34 +56,53 @@ public class GameState {
 				arr[state[a][b]]++;
 			}
 		}
-		
 		if(arr[0] == 0) {
-			return 0;
-		}
-		
-		int maxPid = 0;
-		int maxVal = 0;
-		for(int a = 1; a <= ServerState.playerCount; ++a) {
-			int vl = arr[a];
-			if(vl > maxVal) {
-				maxPid = a;
-				maxVal = vl;
-			}
-		}
-
-		int minDiff = Integer.MAX_VALUE;
-		for(int a = 1; a <= ServerState.playerCount; ++a) {
-			if(a != maxPid) {
-				if(maxVal - arr[a] < minDiff) {
-					minDiff = maxVal - arr[a];
+			boolean unique = true;
+			int max = 0;
+			int pMax = 0;
+			
+			for(int a = 1; a <= ServerState.playerCount; ++a) {
+				if(arr[a] > max) {
+					pMax = a;
+					max = arr[a];
+					unique = true;
+				}else {
+					if(arr[a] == max) {
+						unique = false;
+					}
 				}
 			}
-		}
-		
-		if( minDiff > arr[0]) {
-			return maxPid;
-		}else {
-			return -1;
+			if(unique) {
+				return pMax;
+			}else {
+				return 0;
+			}
+			
+		}else {		
+			int maxPid = 0;
+			int maxVal = 0;
+			for(int a = 1; a <= ServerState.playerCount; ++a) {
+				int vl = arr[a];
+				if(vl > maxVal) {
+					maxPid = a;
+					maxVal = vl;
+				}
+			}
+	
+			int minDiff = Integer.MAX_VALUE;
+			for(int a = 1; a <= ServerState.playerCount; ++a) {
+				if(a != maxPid) {
+					if(maxVal - arr[a] < minDiff) {
+						minDiff = maxVal - arr[a];
+					}
+				}
+			}
+			
+			if( minDiff > arr[0]) {
+				return maxPid;
+			}else {
+				return -1;
+			}
 		}
 	}
 	
