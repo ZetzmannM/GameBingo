@@ -41,7 +41,7 @@ public class InitGameResp extends SocketAction{
 	}
 
 	@Override
-	public void recieve(Socket t) throws IOException {
+	public void recieve(Socket t) throws IOException {		
 		System.out.println("Recieved Greeting Response....");
 
 		InputStream in = t.getInputStream();
@@ -70,5 +70,6 @@ public class InitGameResp extends SocketAction{
 			e.printStackTrace();
 			System.exit(-1);
 		}		
+
 	}
 }

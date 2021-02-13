@@ -22,7 +22,7 @@ public class InitGame extends SocketAction {
 	ClientState clnt;
 	ServerState srv;
 	
-	public static int greetings = 0;
+	public static volatile int greetings = 0;
 	
 	public static String initStatus = "";
 	
@@ -42,13 +42,19 @@ public class InitGame extends SocketAction {
 	public void recieve(Socket t) throws IOException {
 		System.out.println("Recieved Greeting....");
 		
-		greetings++;
-
 		InputStream in = t.getInputStream();
+		short s;
 		
-		short s = (short) SocketIO.readShort(in); // PlayerId
-		if(s == 0) {
-			s = (short) ++ServerState.playerCount;
+		synchronized(srv) {
+			greetings++;
+
+			s = (short) SocketIO.readShort(in); // PlayerId
+			if(s == 0) {
+				s = (short) ++ServerState.playerCount;
+			}
+			else if (s > ServerState.playerCount){
+				ServerState.playerCount = s;
+			}
 		}
 		
 		srv.srvIO.sendSocketIndividual(t, SocketTypeConst.INIT_GAME_RESP, s);
