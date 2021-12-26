@@ -7,13 +7,20 @@ import bingo.state.ServerState;
 public class GameState {
 	
 	private byte[][] state;
-	
+	private HashMap<Integer, Boolean>[][] doubts;
+
 	int width, height;
 	
 	public GameState(int a, int b){
 		this.width = a;
 		this.height = b;
 		state = new byte[a][b];
+		doubts = new HashMap[a][b];
+		for(int i = 0; i < a ; ++i) {
+			for(int j = 0; j < b; ++j) {
+				doubts[i][j] = new HashMap<Integer, Boolean>();
+			}
+		}
 	}
 	
 	public synchronized void set(int a, int b, byte c) {
@@ -28,8 +35,33 @@ public class GameState {
 		state = new byte[width][height];
 	}
 	
+	public synchronized void resetDoubts(int a, int b) {
+		doubts[a][b].clear();
+	}
+	
 	public synchronized byte get(int a, int b) {
 		return state[a][b];
+	}
+	
+	public synchronized boolean flipDoubtStateOn(int a, int b, int pId) {
+		if(doubts[a][b].containsKey(pId) && doubts[a][b].get(pId)) {
+			doubts[a][b].put(pId, false);
+			return false;
+		}else {
+			doubts[a][b].put(pId, true);
+			return true;
+		}
+	}
+	
+	
+	public synchronized int getDoubtsOn(int a, int b) {
+		int count = 0;		
+		for (Integer pId : this.doubts[a][b].keySet()) {
+			if(this.doubts[a][b].get(pId)) {
+				++count;
+			}
+		}
+		return count;
 	}
 	
 	public float[] percentages() {

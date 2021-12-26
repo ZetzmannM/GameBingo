@@ -2,6 +2,7 @@ package bingo.state;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 
 import bingo.ConnectingUI;
 import bingo.GameState;
@@ -12,6 +13,7 @@ import bingo.IntroGUI;
 import bingo.SocketTypeConst;
 import bingo.UI;
 import bingo.action.ClickUpdate;
+import bingo.action.DoubtAction;
 import bingo.action.GameStateUpdate;
 import bingo.action.InitGame;
 import bingo.action.InitGameResp;
@@ -52,6 +54,7 @@ public class ClientState {
 		SocketTypeTable.registerAction(SocketTypeConst.GAME_STATE_UPDATE, new GameStateUpdate(this, null));
 		SocketTypeTable.registerAction(SocketTypeConst.INIT_GAME_RESP, new InitGameResp(this, null));
 		SocketTypeTable.registerAction(SocketTypeConst.WIN_UPD, new WinUpdate(this, null));
+		SocketTypeTable.registerAction(SocketTypeConst.DOUBT, new DoubtAction(this, null));
 
 		
 		clnt = new Client(new Connection(ip, port));
@@ -131,8 +134,13 @@ public class ClientState {
 					clnt.sendSocket(SocketTypeConst.CLICK_UPDATE, a,b); //Send update
 				}
 			}
+
+			@Override
+			public void handleButton3(int a, int b, MouseEvent e) {
+				if(!state.isFree(a, b)) {
+					clnt.sendSocket(SocketTypeConst.DOUBT, a,b);
+				}
+			}
 		});
 	}
-	
-	
 }

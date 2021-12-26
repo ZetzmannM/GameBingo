@@ -28,7 +28,7 @@ public class WinUpdate extends SocketAction {
 		short winner = (short) SocketIO.readShort(t.getInputStream());
 		clnt.intUi.setVisible(false);
 		clnt.intUi.getContentPane().removeAll();
-		WinUI ui = new WinUI(clnt.playerId, winner);
+		WinUI ui = new WinUI(clnt.playerId, winner, null);
 		clnt.intUi.add(ui);
 		clnt.intUi.setVisible(true);
 	}

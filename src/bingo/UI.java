@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -50,6 +52,21 @@ public class UI extends JPanel {
 			for(int b = 0; b < cols; ++b) {
 				final int ac = a;
 				final int bc = b;
+				buttons[a][b].addMouseListener(new MouseListener() {
+					
+					@Override
+					public void mousePressed(MouseEvent e) {
+						if(e.getButton() == MouseEvent.BUTTON3) {
+							hdnl.handleButton3(ac, bc, e);
+						}
+					}
+					
+					@Override public void mouseReleased(MouseEvent e) { }
+					@Override public void mouseExited(MouseEvent e) { }
+					@Override public void mouseEntered(MouseEvent e) {  }					
+					@Override public void mouseClicked(MouseEvent e) { }
+				});
+				
 				buttons[a][b].addActionListener(new ActionListener() {
 					
 					@Override

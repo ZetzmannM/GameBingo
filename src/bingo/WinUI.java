@@ -1,16 +1,23 @@
 package bingo;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import bingo.state.ServerState;
+
 public class WinUI extends JPanel {
 
-	public WinUI(int playerId, int winner){
+	private ServerState st = null;
+	
+	public WinUI(int playerId, int winner, ServerState st){
 		String txt = "";
+		this.st = st;
+		
 		if(winner == 0) {
 			txt = "TIE! No one wins :I";
 		}else {
@@ -35,5 +42,7 @@ public class WinUI extends JPanel {
 		
 		this.add(a);
 		this.setVisible(true);
+		
 	}
+	
 }

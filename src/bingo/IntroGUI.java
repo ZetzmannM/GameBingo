@@ -73,9 +73,14 @@ public class IntroGUI extends JFrame {
 		isServer.setBounds(5, 335, 475, 25);
 		isServer.setEnabled(true);
 		
-		final JCheckBox impScenarios = new JCheckBox("Detect Impossible Scenario");
-		impScenarios.setBounds(5, 355, 475, 25);
+		final JCheckBox impScenarios = new JCheckBox("Detect Impossible Scenarios");
+		impScenarios.setBounds(5, 360, 200, 15);
 		impScenarios.setSelected(true);
+		
+		final JCheckBox voting = new JCheckBox("Enable democrating voting for resetting tiles");
+		voting.setBounds(205, 360, 275, 15);
+		voting.setSelected(true);
+
 		
 		port.setBorder(BorderFactory.createLineBorder(Color.blue));
 		ip.setBorder(BorderFactory.createLineBorder(Color.blue));
@@ -97,17 +102,16 @@ public class IntroGUI extends JFrame {
 		field.setEditable(false);
 		field.setVisible(true);
 		
-
 		this.add(spin);
 		this.add(field);
 		this.add(impScenarios);
+		this.add(voting);
 		this.add(isServer);
 		this.add(ip);
 		this.add(port);
 		this.add(start);
 		this.add(pane);
 		this.add(text);
-		
 		
 		isServer.addActionListener(new ActionListener() {
 			
@@ -159,14 +163,14 @@ public class IntroGUI extends JFrame {
 						return;
 					}
 
-					setup(true, "", prt, args, 1, impScenarios.isSelected());
+					setup(true, "", prt, args, 1, impScenarios.isSelected(), voting.isSelected());
 				}else {
 					if(ip.getText().split("\\.").length != 4) {
 						ip.setBorder(BorderFactory.createLineBorder(Color.red));
 						return;
 					}
 					
-					setup(false, ip.getText(), prt, new String[0][0], (int)spin.getValue(), false);
+					setup(false, ip.getText(), prt, new String[0][0], (int)spin.getValue(), false, false);
 				}
 			}
 		});
@@ -184,11 +188,11 @@ public class IntroGUI extends JFrame {
 
 	}
 	
-	private void setup(boolean server, String ip, int port, String[][] gols, int wantedId, boolean detect) {
+	private void setup(boolean server, String ip, int port, String[][] gols, int wantedId, boolean detect, boolean voting) {
 		this.setVisible(false);
 		
 		if(server) {						
-			new ServerState(gols, port, this, detect);
+			new ServerState(gols, port, this, detect, voting);
 			
 		}else {
 			new ClientState(ip, port, this, wantedId);
