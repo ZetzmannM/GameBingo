@@ -58,6 +58,8 @@ public class ClientIO {
 	 * @param objects arguments
 	 */
 	public void sendSocket(short type, Object[] objects){
+		System.out.println("CLIENT | SND " + type);
+
 		try {
 			s.getOutputStream().write(ByteBuffer.allocate(2).putShort(type).array());
 			SocketTypeTable.get(type).send(s, objects);
@@ -85,6 +87,7 @@ class ClientCareTakerThread extends Thread {
 			while(thr.running && !bad) {
 				try {
 					short type =  (short) (in.read() << 8 & 0xff00 | in.read() << 0 & 0x00ff);
+					System.out.println("CLIENT | RCV " + type);
 					SocketTypeTable.get(type).recieve(s);
 				} catch (IOException e) {
 					System.err.println("Connection Reset!");

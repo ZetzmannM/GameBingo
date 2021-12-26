@@ -18,6 +18,14 @@ public class GameSocketIO {
 		}
 	}
 	
+	public static void writeDoubtState(GameState state, OutputStream os) throws IOException {
+		for(int a = 0; a < state.width; ++a) {
+			for(int b = 0; b < state.height; ++b) {
+				SocketIO.writeShort((short) state.getDoubtsOn(a, b), os);
+			}
+		}
+	}
+	
 	public static void readGameState(GameState state, InputStream is) throws IOException{
 		for(int a = 0; a < state.width; ++a) {
 			for(int b = 0; b < state.height; ++b) {
@@ -25,6 +33,18 @@ public class GameSocketIO {
 			}
 		}
 	}
+	public static void readDoubtState(GameState state, InputStream is) throws IOException{
+		for(int a = 0; a < state.width; ++a) {
+			for(int b = 0; b < state.height; ++b) {
+				state.resetDoubts(a, b);
+				short value = (short) SocketIO.readShort(is);
+				for(int i = 0; i < value; ++i) {
+					state.flipDoubtStateOn(a,b, i);
+				}
+			}
+		}
+	}
+
 	
 	public static void writeGoals(String[][] args, OutputStream os) throws IOException{
 		SocketIO.writeString(os, JSONInterface.toJson(args));

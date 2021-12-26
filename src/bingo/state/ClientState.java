@@ -14,6 +14,7 @@ import bingo.SocketTypeConst;
 import bingo.UI;
 import bingo.action.ClickUpdate;
 import bingo.action.DoubtAction;
+import bingo.action.DoubtUpdate;
 import bingo.action.GameStateUpdate;
 import bingo.action.InitGame;
 import bingo.action.InitGameResp;
@@ -55,8 +56,8 @@ public class ClientState {
 		SocketTypeTable.registerAction(SocketTypeConst.INIT_GAME_RESP, new InitGameResp(this, null));
 		SocketTypeTable.registerAction(SocketTypeConst.WIN_UPD, new WinUpdate(this, null));
 		SocketTypeTable.registerAction(SocketTypeConst.DOUBT, new DoubtAction(this, null));
+		SocketTypeTable.registerAction(SocketTypeConst.DOUBT_UPDATE, new DoubtUpdate(this, null));
 
-		
 		clnt = new Client(new Connection(ip, port));
 		clnt.addOnConnectionLost(new IConnectLost() {
 			@Override

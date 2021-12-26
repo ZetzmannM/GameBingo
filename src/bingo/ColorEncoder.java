@@ -11,7 +11,9 @@ public class ColorEncoder {
 		case 2: return new Color(100,100,255);
 		case 3: return new Color(100,255,100);
 		case 4: return new Color(200,200,0);
-		case 5: return new Color(255,0xCC,0xCC);
+		case 5: return Color.pink;
+		case 6: return Color.cyan;
+		case 7: return Color.magenta;
 		default:
 			return Color.black;
 		}
@@ -25,6 +27,8 @@ public class ColorEncoder {
 		case 3: return "Green";
 		case 4: return "Yellow"; 
 		case 5: return "Pink"; 
+		case 6: return "Cyan";
+		case 7: return "Magenta";
 		default:
 			return "black";
 		}

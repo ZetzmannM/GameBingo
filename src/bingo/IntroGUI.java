@@ -73,7 +73,7 @@ public class IntroGUI extends JFrame {
 		isServer.setBounds(5, 335, 475, 25);
 		isServer.setEnabled(true);
 		
-		final JCheckBox impScenarios = new JCheckBox("Detect Impossible Scenarios");
+		final JCheckBox impScenarios = new JCheckBox("Detect wins/ties");
 		impScenarios.setBounds(5, 360, 200, 15);
 		impScenarios.setSelected(true);
 		

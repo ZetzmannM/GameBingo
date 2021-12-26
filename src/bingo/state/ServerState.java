@@ -14,6 +14,7 @@ import bingo.UI;
 import bingo.WinUI;
 import bingo.action.ClickUpdate;
 import bingo.action.DoubtAction;
+import bingo.action.DoubtUpdate;
 import bingo.action.GameStateUpdate;
 import bingo.action.InitGame;
 import bingo.action.InitGameResp;
@@ -63,6 +64,7 @@ public class ServerState {
 		SocketTypeTable.registerAction(SocketTypeConst.INIT_GAME_RESP, new InitGameResp(null, this));
 		SocketTypeTable.registerAction(SocketTypeConst.WIN_UPD, new WinUpdate(null, this));
 		SocketTypeTable.registerAction(SocketTypeConst.DOUBT, new DoubtAction(null, this));
+		SocketTypeTable.registerAction(SocketTypeConst.DOUBT_UPDATE, new DoubtUpdate(null, this));
 
 		hndl.getContentPane().removeAll();
 		hndl.setLayout(new GridLayout(1, 1));
@@ -97,7 +99,7 @@ public class ServerState {
 			@Override
 			public void handleButton3(int a, int b, MouseEvent e) {
 				if(!state.isFree(a, b)) {
-					if(state.get(a, b) != playerId ) {
+					if(demoVoting && state.get(a, b) != playerId ) {
 						state.flipDoubtStateOn(a, b, playerId);
 					}
 					
@@ -106,10 +108,12 @@ public class ServerState {
 					||(demoVoting&&((state.getDoubtsOn(a, b)/((float)(playerCount-1)))>0.6666666))) {
 						state.resetDoubts(a,b);
 						state.set(a, b, (byte)0);
-						ui.drawState(state);
-						
+					
 						srvIO.sendSocket(SocketTypeConst.GAME_STATE_UPDATE);
 					}
+					
+					srvIO.sendSocket(SocketTypeConst.DOUBT_UPDATE);
+					ui.drawState(state);
 				}
 			}
 		});

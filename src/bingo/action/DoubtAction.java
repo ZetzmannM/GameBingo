@@ -40,7 +40,7 @@ public class DoubtAction extends SocketAction {
 		int id = SocketIO.readInteger(t.getInputStream());
 		
 		if(!srv.state.isFree(a, b)) {
-			if(srv.state.get(a, b) != id ) {
+			if(srv.demoVoting && (srv.state.get(a, b) != id )) {
 				srv.state.flipDoubtStateOn(a, b, id);
 			}
 			
@@ -48,10 +48,11 @@ public class DoubtAction extends SocketAction {
 			||(srv.demoVoting&&((srv.state.getDoubtsOn(a, b)/((float)(srv.playerCount-1)))>0.6666666))) {
 				srv.state.resetDoubts(a,b);
 				srv.state.set(a, b, (byte)0);
-				srv.ui.drawState(srv.state);
-				
 				srv.srvIO.sendSocket(SocketTypeConst.GAME_STATE_UPDATE);
 			}
+			
+			srv.ui.drawState(srv.state);			
+			srv.srvIO.sendSocket(SocketTypeConst.DOUBT_UPDATE);
 		}
 	}
 

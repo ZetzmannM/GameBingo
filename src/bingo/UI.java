@@ -8,11 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 public class UI extends JPanel {
 	
@@ -42,6 +43,13 @@ public class UI extends JPanel {
 	public void drawState(GameState r){
 		for(int a = 0; a < rows; ++a) {
 			for(int b = 0; b < cols; ++b) {
+				float f = r.getDoubtsOn(a, b)/3.0f;
+				int r1 = Math.max(0, Math.min(255, (int) (0*f + 180*(1-f))));
+				int g1 = Math.max(0, Math.min(255, (int) (0*f + 180*(1-f))));
+				int b1 = Math.max(0, Math.min(255, (int) (0*f + 180*(1-f))));
+				
+				Border border = new LineBorder(new Color(r1,g1,b1), 1+((int)(2*f)), false);
+				buttons[a][b].setBorder(border);
 				buttons[a][b].setBackground(ColorEncoder.byId(r.get(a, b)));
 			}
 		}

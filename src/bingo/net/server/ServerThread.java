@@ -42,6 +42,8 @@ public class ServerThread extends Thread {
 	
 	public synchronized void sendSocket(Socket s, short type, Object[] objects){
 		try {
+			System.out.println("SERVER | SND " + type);
+
 			s.getOutputStream().write(ByteBuffer.allocate(2).putShort(type).array());
 			SocketTypeTable.get(type).send(s, objects);
 		} catch (IOException e) {
@@ -96,6 +98,7 @@ class ServerCareTakerThread extends Thread {
 		while(!s.isClosed() && thr.running) {
 			try {
 				short type =  (short) (s.getInputStream().read() << 8 & 0xff00 | s.getInputStream().read() << 0 & 0x00ff);
+				System.out.println("SERVER | RCV " + type);
 				SocketTypeTable.get(type).recieve(s);
 			} catch (IOException e) {
 				System.err.println("Connection Reset!");
